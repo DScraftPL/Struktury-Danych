@@ -1,77 +1,59 @@
 #include <iostream>
 #include <fstream>
 #include "Kolejka/kolejka.h"
+#include "Lista1Kier/lista1kier.h"
 
 using namespace std;
 
 int main(){
-  ifstream plik;
-  plik.open("znaki2.txt");
-  kolejka queue;
-  queue.first = nullptr;
-  queue.last = nullptr;
-  int n;
-  char k;
-  do {
-    cout << "1 - sprawdz czy pusta\n2 - dodaj element z klawiatury\n3 - usun element i wyswietl\n4 - usun wszystko\n5 - wczytaj z pliku\n6 - wyswietl pierwszy element\n7 - wyswietl kolejke\n0 - wyjdz\n";
+  Lista1Kier lista;
+  int n, x, pos;
+  do{
     cin >> n;
     switch (n) {
       case 1:{
-        if(kolejka_empty(queue)){
-          cout << "Kolejka jest pusta!\n";
-        } else {
-          cout << "Kolejka nie jest pusta!\n";
-        }
+        cin >> x;
+        lista.addHead(x);
         break;
       }
       case 2:{
-        cin >> k;
-        kolejka_push(queue, k);
+        cin >> x;
+        lista.addTail(x);
         break;
       }
       case 3:{
-        if(!kolejka_empty(queue)){
-          k = kolejka_pop(queue);
-          cout << "usunięto element: " << k << endl;
-        } else {
-          cout << "Kolejka jest pusta!\n";
-        }
+        cin >> x >> pos;
+        lista.addPos(x, pos);
         break;
       }
       case 4:{
-        while(!kolejka_empty(queue)){
-          k = kolejka_pop(queue);
-          cout << "usunięto element: " << k << endl;
-        }
+        lista.deleteHead();
         break;
       }
       case 5:{
-        while(!plik.eof()){
-          plik >> k;
-          if(k>='A' && k<='Z'){
-            kolejka_push(queue, k);
-          }
-        }
+        lista.deleteTail();
         break;
       }
       case 6:{
-        if(!kolejka_empty(queue)){
-          cout << "element na poczatku: " << queue.first -> liczba << endl;
-        } else {
-          cout << "Kolejka jest pusta!\n";
-        }
-        break;
+        cin >> pos;
+        lista.deletePos(pos);
       }
       case 7:{
-        if(!kolejka_empty(queue)){
-          kolejka_wyswietl(queue);
-        } else {
-          cout << "Kolejka jest pusta!\n";
+        for(int i=0; i<lista.counter; i++){
+          cout << lista[i] << " ";
         }
+        cout << endl;
+        break;
+      }
+      case 8:{
+        cout << lista.srednia();
+        break;
+      }
+      case 9:{
+        cout << lista.maximum();
         break;
       }
     }
-  } while(n>0 && n<9);
-
+  } while(n>0);
   return 0;
 }
